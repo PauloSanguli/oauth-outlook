@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script src="auth.js"></script>
+    <script>
+        
+        const tokenUrl = "https://login.microsoftonline.com/common/oauth2/v2.0/token";
+        const code = "0.AVkAEcE5zPJsokmmZ9xVijwVaMxuasfejEFImlJ4m367hSKdALI.AgABBAIAAAApTwJmzXqdR4BN2miheQMYAgDs_wUA9P-lZ137ZUoOFeAwT_xs8E-8bUzlh5rj1rkKrvTkj7L7xo56-m0ZtvbMjZF4V4LKptUdAgblNcWtzpwmITpRs6e9kIQzBHCWjau-S2-seIDSTNqDgN7BjUMscJjJYu-VbMRLjdQQNC1ZK97Z8bOFhfNOX-Y3jpKBlx2eGnS7lLS5bNJVbrEWZAjUuwyfKVkUvovdtEKMCLj1Q7vS_8UTXaZV7_5GZPDfI5Vd2-dNFNowHuyi-ckiRttm_fNpPdJTeoXpvM6npn0wicZgioFOQ6zKuEYRfpaJmsSNtS--ibxgoMy9JbmuHr1D0AWXZKVEe2vZHLIOnEJBi547KVgCgZw2RGdVbQxdFDXU7PIjvSsa7P-CyAxjam1y8GB33h05Upt65TAgQNx0QO9HXrGWriW1DAeNPqksYSpV9xh_SYhGqFd3mREYCqmGzIg3f_MrH16nmmcKSw9wSi6sTk6OiPIA-_tGp2WUJN5eUZTF7TZdCJi8QbsIxdoZdfqhJdSqu5WLttVNE4HPReqvFE_v3FkhblFCJWFT-Q-vF32VfpcHph6Vq4XeV57Xyd1YzFsrrmfXos941UBKOCQ7uKheNdf07c5RjgUfGUvW32A6XTHFNW2CwUWI50oCPHc_E2vq6Tnw0I_z_fyVILScm67nf7tW75V7TWIeF8Gz3iMhEIwF5906nMaZXGntTcyuTvA-SMLY6fD0_iZa37LB2PewM5TWj5dmbz097voGQDN8UR3jbFclJ7ZaHY9s2dJRU8_GNFw8SKoqeeOWMVzWSHfHSpbvtsg82JRcM8NbPl6xzQ9JnQh3wZFneK5VvdbdFS5E2zpNfSCLrQM-GVSE5ryw8rH7tY_ixHYAa7c_CmIuKZ0okutsxTppFmNapHhEYJvBrHgIDkEd7ZWcBpUmT3cJuHVPxd_DZOfx8w5iNYSJ9MFPnv_W1ivAuCkRfcdyw9Dk"
+        const headers = {
+        "Content-Type": "application/json"
+        };
+
+        const body = {
+            client_id: clientId,
+            scope: [
+            'api://c76a6ecc-8cde-4841-9a52-789b7ebb8522/Employee.Write.All',
+            'api://c76a6ecc-8cde-4841-9a52-789b7ebb8522/Employee.Read.All',
+            'api://c76a6ecc-8cde-4841-9a52-789b7ebb8522/profile',
+            'api://c76a6ecc-8cde-4841-9a52-789b7ebb8522/offline_acces',
+            'api://c76a6ecc-8cde-4841-9a52-789b7ebb8522/email',
+            'api://c76a6ecc-8cde-4841-9a52-789b7ebb8522/Mail.ReadWrite',
+            'api://c76a6ecc-8cde-4841-9a52-789b7ebb8522/Mail.Read'
+          ],
+          code: code,
+          grant_type: "authorization_code",
+          redirect_uri: redirectUri,
+
+        }
+        console.log(body)
+        <!-- const body = `client_id=${clientId}&scope=${scope}&code=${code}&grant_type=authorization_code&redirect_uri=${redirectUri}`; -->
+
+        fetch(tokenUrl, { method: "POST",mode: "no-cors", headers: headers, body: JSON.stringify(body)})
+        .then((response) => response.json())
+        .then((response) => {
+            console.log(response)
+            const accessToken = rrsponse.access_token;
+            const refreshToken = response.refresh_token;
+
+            // Use the access token to access the Microsoft Outlook API
+            // ...
+
+            // Store the refresh token to use it later
+            
+            localStorage.setItem("refreshToken", refreshToken);
+        });
+    </script>
+</body>
+</html>

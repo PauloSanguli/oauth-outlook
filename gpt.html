@@ -1,0 +1,31 @@
+// index.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Microsoft Outlook OAuth2 Example</title>
+</head>
+<body>
+  <h1>Microsoft Outlook OAuth2 Example</h1>
+  <button id="login-button">Login with Outlook1</button>
+  <div id="output"></div>
+
+  <script src="https://alcdn.msauth.net/browser/2.14.2/js/msal-browser.min.js"></script>
+  <script src="gpt.js"></script>
+  <script>
+    const loginButton = document.getElementById('login-button');
+    const outputDiv = document.getElementById('output');
+
+    loginButton.addEventListener('click', () => {
+      const clientApplication = new msal.PublicClientApplication(msalConfig);
+      clientApplication.loginPopup(loginRequest).then((response) => {
+        console.log(response);
+        outputDiv.innerText = `Access token: ${response.accessToken}`;
+      }).catch((error) => {
+        console.error(error);
+      });
+    });
+  </script>
+</body>
+</html>
